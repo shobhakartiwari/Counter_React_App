@@ -9,24 +9,26 @@ const App = () => {
 
   //Declare variable
   const [counter, setCounter]  = useState(0); //hooks
+
   const [result , setResults]  = useState([]);
 
   const getPost = async () => {
       const response = await ApiManager.get('/posts');
-      setResults(response);
+      setResults(response.data);
   };
 
   return (
     <View style={styles.container}>
       
       <Text>we have found : {result.length} results</Text>
-      <Text>Current Count :{counter} </Text>
-      
-      <Button title="Get POST"
+    
+      <Button title="Retrieve POST"
       onPress={()=>{
         getPost();
       }}/>
 
+
+      <Text>Current Count :{counter} </Text>    
       <Button title="Increment"
       onPress={()=>{
         //---dont do this -----counter++; // counter = counter + 1 
