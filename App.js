@@ -2,32 +2,47 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
- 
+import ApiManager from './api/ApiManager'
 
 //Create custom components
 const App = () => {
 
   //Declare variable
-  //var counter = 0;
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter]  = useState(0); //hooks
+  const [result , setResults]  = useState([]);
+
+  const getPost = async () => {
+      const response = await ApiManager.get('/posts');
+      setResults(response);
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Current Count : {counter}</Text>
+      
+      <Text>we have found : {result.length} results</Text>
+      <Text>Current Count :{counter} </Text>
+      
+      <Button title="Get POST"
+      onPress={()=>{
+        getPost();
+      }}/>
+
       <Button title="Increment"
       onPress={()=>{
-        //counter++;
+        //---dont do this -----counter++; // counter = counter + 1 
         setCounter(counter + 1);
         console.log(counter);
       }}
       />
+      
       <Button title="Decrement"
       onPress={()=>{
-        //counter--;
+        //dont directly change variables counter--; 
         setCounter(counter - 1);
         console.log(counter);
       }}
       />
+      
       <StatusBar style="auto" />
     </View>
   );
